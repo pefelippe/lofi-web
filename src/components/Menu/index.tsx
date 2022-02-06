@@ -1,9 +1,10 @@
-import styles from "./styles.module.scss";
-
-import { SpotifyBtn } from "../SpotifyBtn";
 import Image from "next/image";
+import styles from "./styles.module.scss";
+import { useSession } from "next-auth/react";
 
 export function Menu() {
+  const { data: session } = useSession();
+
   return (
     <main className={styles.container}>
       <div className={styles.background}>
@@ -11,11 +12,16 @@ export function Menu() {
       </div>
 
       <div className={styles.content}>
-        <span>
-          Meet your new <b>Pomodoro</b> site.
-        </span>
+        {!session ? (
+          <span>
+            Meet your new <b>Pomodoro</b> site.
+          </span>
+        ) : (
+          <>
+            <span>Logado</span>
+          </>
+        )}
       </div>
-        <button>Start Now</button>
     </main>
   );
 }
